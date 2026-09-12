@@ -26,6 +26,11 @@ export default function TOC() {
           </Link>
         </li>
         <li>
+          <Link href="/" id="wd-kambaz-link">
+            Kambaz
+          </Link>
+        </li>
+        <li>
           <Link href="https://webdev-client.vercel.app/book/ch1#sec-1-3-11">
             Book Ch 1
           </Link>
