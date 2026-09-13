@@ -29,7 +29,7 @@ export default function HeadingTags() {
       </div>
       <div id="wd-your-heading">
         <h4>Maya Robie</h4>
-        Hi there! I am a <span>fourth</span> year student at Northeastern University studying computer science. I like to try new recipes and new restaurants around Boston, so if you have any good recs let me know!
+        Hi there! I am a <span id="wd-your-span">fourth</span> year student at Northeastern University studying computer science. I like to try new recipes and new restaurants around Boston, so if you have any good recs let me know!
       </div>
     </>
   );
