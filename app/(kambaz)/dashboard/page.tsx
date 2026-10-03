@@ -1,11 +1,17 @@
+import "@/app/labs/lab2/tailwind/utilities.css";
 import CourseCard from "./CourseCard";
 
 export default function Dashboard() {
   return (
     <div id="wd-dashboard">
-      <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
-      <h2 id="wd-dashboard-published">Published Courses (4)</h2> <hr />
-      <div id="wd-dashboard-courses">
+      <h1 id="wd-dashboard-title">Dashboard</h1>
+      <hr />
+      <h2 id="wd-dashboard-published">Published Courses (4)</h2>
+      <hr />
+      <div
+        id="wd-dashboard-courses"
+        className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
+      >
         <CourseCard
           id="1000"
           title="CS1000 Game Development"
@@ -25,9 +31,9 @@ export default function Dashboard() {
           image="/images/cyber.jpg"
         />
         <CourseCard
-          id="4000"
-          title="CS4000 Mobile App Development"
-          subtitle="Building apps with React"
+          id="CS9999"
+          title="CS9999 Sample Course"
+          subtitle="Assistant-generated sample — not my course"
           image="/images/mobiledev.jpg"
         />
       </div>

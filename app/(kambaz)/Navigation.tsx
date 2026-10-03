@@ -1,41 +1,91 @@
+"use client";
+
+import { AiOutlineDashboard } from "react-icons/ai";
+import { FaCircleQuestion, FaRegCircleUser } from "react-icons/fa6";
+import { LiaBookSolid, LiaCogSolid } from "react-icons/lia";
+import { IoCalendarOutline } from "react-icons/io5";
+import { FiInbox } from "react-icons/fi";
 import Link from "next/link";
+import "@/app/labs/lab2/tailwind/utilities.css";
 
 export default function KambazNavigation() {
   return (
-    <div id="wd-kambaz-navigation">
-      <a
-        href="https://www.northeastern.edu/"
-        id="wd-neu-link"
-        target="_blank"
-        rel="noreferrer"
+    <nav
+      id="wd-kambaz-navigation"
+      className="fixed bottom-0 top-0 z-20 hidden w-[120px] bg-black md:block"
+    >
+      <div id="wd-neu-logo" className="py-3 text-center">
+        <img
+          src="/images/NEU.png"
+          alt="Northeastern University"
+          width={70}
+          className="mx-auto pt-2"
+        />
+      </div>
+
+      <Link
+        href="/account"
+        id="wd-account-link"
+        className="block bg-black py-3 text-center text-sm text-white no-underline"
       >
-        Northeastern
-      </a>
-      <br />
-      <Link href="/account" id="wd-account-link">
+        <FaRegCircleUser className="inline-block text-3xl text-white" />
+        <br />
         Account
       </Link>
-      <br />
-      <Link href="/dashboard" id="wd-dashboard-link">
+      <Link
+        href="/dashboard"
+        id="wd-dashboard-link"
+        className="block bg-white py-3 text-center text-sm text-red-600 no-underline"
+      >
+        <AiOutlineDashboard className="inline-block text-3xl text-red-600" />
+        <br />
         Dashboard
       </Link>
-      <br />
-      <Link href="/dashboard" id="wd-course-link">
+      <Link
+        href="/dashboard"
+        id="wd-course-link"
+        className="block bg-black py-3 text-center text-sm text-white no-underline"
+      >
+        <LiaBookSolid className="inline-block text-3xl text-red-600" />
+        <br />
         Courses
       </Link>
-      <br />
-      <Link href="/calendar" id="wd-calendar-link">
+      <Link
+        href="/calendar"
+        id="wd-calendar-link"
+        className="block bg-black py-3 text-center text-sm text-red-600 no-underline"
+      >
+        <IoCalendarOutline className="inline-block text-3xl text-red-600" />
+        <br />
         Calendar
       </Link>
-      <br />
-      <Link href="/inbox" id="wd-inbox-link">
+      <Link
+        href="/inbox"
+        id="wd-inbox-link"
+        className="block bg-black py-3 text-center text-sm text-red-600 no-underline"
+      >
+        <FiInbox className="inline-block text-3xl text-red-600" />
+        <br />
         Inbox
       </Link>
-      <br />
-      <Link href="/labs" id="wd-labs-link">
+      <Link
+        href="/labs"
+        id="wd-labs-link"
+        className="block bg-black py-3 text-center text-sm text-red-600 no-underline"
+      >
+        <LiaCogSolid className="inline-block text-3xl text-red-600" />
+        <br />
         Labs
       </Link>
-      <br />
-    </div>
+      <Link
+        href="/labs"
+        id="wd-ai-nav-help"
+        className="block bg-black py-3 text-center text-sm text-white no-underline"
+      >
+        <FaCircleQuestion className="inline-block text-3xl text-white" />
+        <br />
+        Help
+      </Link>
+    </nav>
   );
 }
