@@ -20,16 +20,18 @@ export default function HeadingTags() {
         <h4>Lab notes</h4>
         This outline shows how heading tags of different sizes nest inside one
         another to organize a page.
-        <h5>What I built</h5>
-        A short sample section that demonstrates an h4, an h5, and an h6
-        appearing in decreasing order of size.
+        <h5>What I built</h5>A short sample section that demonstrates an h4, an
+        h5, and an h6 appearing in decreasing order of size.
         <h6>Next step</h6>
         Try adding more sections and subsections to see how the browser renders
         each heading level.
       </div>
       <div id="wd-your-heading">
         <h4>Maya Robie</h4>
-        Hi there! I am a <span id="wd-your-span">fourth</span> year student at Northeastern University studying computer science. I like to try new recipes and new restaurants around Boston, so if you have any good recs let me know!
+        Hi there! I am a <span id="wd-your-span">fourth</span> year student at
+        Northeastern University studying computer science. I like to try new
+        recipes and new restaurants around Boston, so if you have any good recs
+        let me know!
       </div>
     </>
   );

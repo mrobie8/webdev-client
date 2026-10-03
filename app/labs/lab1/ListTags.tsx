@@ -27,7 +27,9 @@ export default function ListTags() {
       <ul id="wd-ai-html-tags">
         <li>h1 - the largest heading, used for the main title of a page</li>
         <li>p - wraps a paragraph and adds vertical space around it</li>
-        <li>ol - an ordered list, numbered for steps that happen in sequence</li>
+        <li>
+          ol - an ordered list, numbered for steps that happen in sequence
+        </li>
         <li>ul - an unordered list, bulleted when the order does not matter</li>
         <li>li - a single item inside an ordered or unordered list</li>
         <li>table - arranges data in rows and columns</li>

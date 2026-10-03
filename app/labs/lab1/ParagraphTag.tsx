@@ -29,10 +29,12 @@ export default function ParagraphTag() {
         produces the vertical gap between paragraphs.
       </p>
       <p id="wd-p-your-1">
-        I am from Marblehead Massachusetts, a small town on the North Shore of Boston. 
+        I am from Marblehead Massachusetts, a small town on the North Shore of
+        Boston.
       </p>
       <p id="wd-p-your-2">
-        I hope to learn how to make websites that are functional and visually satisfying. 
+        I hope to learn how to make websites that are functional and visually
+        satisfying.
       </p>
     </div>
   );

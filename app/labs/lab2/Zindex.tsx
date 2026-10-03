@@ -15,7 +15,10 @@ export default function Zindex() {
         <div className="wd-pos-absolute-120-20 wd-bg-color-red wd-dimension-square">
           Square
         </div>
-        <div id="wd-ai-zindex" className="wd-ai-zindex-top wd-bg-color-green wd-dimension-square wd-fg-color-white">
+        <div
+          id="wd-ai-zindex"
+          className="wd-ai-zindex-top wd-bg-color-green wd-dimension-square wd-fg-color-white"
+        >
           AI box
         </div>
       </div>

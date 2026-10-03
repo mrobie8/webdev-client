@@ -18,7 +18,7 @@ export default function ReactIconsSampler() {
         <FaEnvelopeOpenText />
         <FaRegClock />
         <GiBeveledStar className="text-5xl" />
-        <ImBaffled className="text-6xl"/>
+        <ImBaffled className="text-6xl" />
       </div>
     </div>
   );

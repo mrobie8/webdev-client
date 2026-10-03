@@ -52,20 +52,20 @@
 }
 
 @media (min-width: 1000px) and (max-width: 1100px) {
-    .wd-media-queries-demo {
-        background-color: teal;
-        color: white;
-    }
-    .wd-media-queries-demo li.wd-mq-rule-1000 {
-        opacity: 0.55;
-        font-weight: normal;
-        text-decoration: none;
-    }
-    .wd-media-queries-demo li.wd-mq-rule-1100 {
-        opacity: 1;
-        font-weight: bold;
-        text-decoration: underline;
-    }
+  .wd-media-queries-demo {
+    background-color: teal;
+    color: white;
+  }
+  .wd-media-queries-demo li.wd-mq-rule-1000 {
+    opacity: 0.55;
+    font-weight: normal;
+    text-decoration: none;
+  }
+  .wd-media-queries-demo li.wd-mq-rule-1100 {
+    opacity: 1;
+    font-weight: bold;
+    text-decoration: underline;
+  }
 }
 
 @media (min-width: 1100px) and (max-width: 1250px) {

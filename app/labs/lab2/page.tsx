@@ -131,7 +131,6 @@ export default function Lab2() {
       <Flex />
       <MediaQueriesDemo />
       <ReactIconsSampler />
-
     </div>
   );
 }

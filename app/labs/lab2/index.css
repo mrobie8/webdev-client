@@ -42,8 +42,8 @@ p#wd-id-selector-3 {
 }
 
 .wd-your-class {
-    background-color: tan;
-    color: coral;
+  background-color: tan;
+  color: coral;
 }
 
 .wd-selector-1 .wd-selector-3 {
@@ -55,7 +55,7 @@ p#wd-id-selector-3 {
   color: blue;
 }
 
-.wd-selector-3  .wd-selector-5 {
+.wd-selector-3 .wd-selector-5 {
   background-color: green;
   color: white;
 }
@@ -94,26 +94,59 @@ p:where(#wd-ai-cascade) {
   background-color: red;
 }
 
-.wd-fg-color-black { color: black; }
-.wd-fg-color-white { color: white; }
-.wd-fg-color-blue { color: #7070ff; }
-.wd-fg-color-red { color: #ff7070; }
-.wd-fg-color-green { color: green; }
+.wd-fg-color-black {
+  color: black;
+}
+.wd-fg-color-white {
+  color: white;
+}
+.wd-fg-color-blue {
+  color: #7070ff;
+}
+.wd-fg-color-red {
+  color: #ff7070;
+}
+.wd-fg-color-green {
+  color: green;
+}
 
-.wd-bg-color-yellow { background-color: #ffff07; }
-.wd-bg-color-blue { background-color: #7070ff; }
-.wd-bg-color-red { background-color: #ff7070; }
-.wd-bg-color-green { background-color: green; }
-.wd-bg-color-gray { background-color: lightgray; }
+.wd-bg-color-yellow {
+  background-color: #ffff07;
+}
+.wd-bg-color-blue {
+  background-color: #7070ff;
+}
+.wd-bg-color-red {
+  background-color: #ff7070;
+}
+.wd-bg-color-green {
+  background-color: green;
+}
+.wd-bg-color-gray {
+  background-color: lightgray;
+}
 
-.wd-border-fat { border-width: 20px 30px 20px 30px; }
-.wd-border-thin { border-width: 4px; }
-.wd-border-solid { border-style: solid; }
-.wd-border-dashed { border-style: dashed; }
-.wd-border-yellow { border-color: #ffff07; }
-.wd-border-red { border-color: #ff7070; }
-.wd-border-blue { border-color: #7070ff; }
-
+.wd-border-fat {
+  border-width: 20px 30px 20px 30px;
+}
+.wd-border-thin {
+  border-width: 4px;
+}
+.wd-border-solid {
+  border-style: solid;
+}
+.wd-border-dashed {
+  border-style: dashed;
+}
+.wd-border-yellow {
+  border-color: #ffff07;
+}
+.wd-border-red {
+  border-color: #ff7070;
+}
+.wd-border-blue {
+  border-color: #7070ff;
+}
 
 .wd-padded-top-left {
   padding-top: 50px;
@@ -200,12 +233,12 @@ p:where(#wd-ai-cascade) {
 }
 
 .wd-padded-top-bottom {
-    padding-top: 40px;
-    padding-bottom: 40px;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 
 .wd-box-sizing-wide {
-    width: 500px;
+  width: 500px;
 }
 
 .wd-rounded-corners-top {
@@ -266,7 +299,7 @@ p:where(#wd-ai-cascade) {
 
 .wd-dimension-mine {
   width: 300px;
-  height:70px;
+  height: 70px;
 }
 
 .wd-ai-dimension {
@@ -274,7 +307,6 @@ p:where(#wd-ai-cascade) {
   height: 60px;
   background-color: yellow;
 }
-
 
 .wd-pos-relative-nudge-up-right {
   position: relative;
@@ -395,12 +427,30 @@ img.wd-float-right {
 .wd-grid-row {
   clear: both;
 }
-.wd-grid-col-half-page { width: 50%; float: left; }
-.wd-grid-col-third-page { width: 33%; float: left; }
-.wd-grid-col-two-thirds-page { width: 67%; float: left; }
-.wd-grid-col-left-sidebar { width: 20%; float: left; }
-.wd-grid-col-main-content { width: 60%; float: left; }
-.wd-grid-col-right-sidebar { width: 20%; float: left; }
+.wd-grid-col-half-page {
+  width: 50%;
+  float: left;
+}
+.wd-grid-col-third-page {
+  width: 33%;
+  float: left;
+}
+.wd-grid-col-two-thirds-page {
+  width: 67%;
+  float: left;
+}
+.wd-grid-col-left-sidebar {
+  width: 20%;
+  float: left;
+}
+.wd-grid-col-main-content {
+  width: 60%;
+  float: left;
+}
+.wd-grid-col-right-sidebar {
+  width: 20%;
+  float: left;
+}
 
 .wd-flex-row-container {
   display: flex;
