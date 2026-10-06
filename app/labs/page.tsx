@@ -30,7 +30,7 @@ export default function Labs() {
             href="https://github.com/mrobie8/webdev-client"
             target="_blank"
             rel="noreferrer"
-            id="wd-your-github"
+            id="wd-github"
           >
             My Github repository
           </a>
