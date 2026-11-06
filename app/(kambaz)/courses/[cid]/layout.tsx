@@ -23,19 +23,19 @@ export default function CoursesLayout({
   const [showCourseNav, setShowCourseNav] = useState(true);
   const router = useRouter();
   const { currentUser } = useAccountContext();
-  const enrolled = useEnrollmentsStore((state) =>
-    currentUser
-      ? state.enrollments.some(
-          (e) => e.user === currentUser._id && e.course === courseId,
-        )
-      : false,
+  const canView = useEnrollmentsStore(
+    (state) =>
+      !currentUser ||
+      state.enrollments.some(
+        (e) => e.user === currentUser._id && e.course === courseId,
+      ),
   );
 
   useEffect(() => {
-    if (!enrolled) router.push("/dashboard");
-  }, [enrolled, router]);
+    if (!canView) router.push("/dashboard");
+  }, [canView, router]);
 
-  if (!enrolled) return null;
+  if (!canView) return null;
 
   return (
     <div id="wd-courses">
