@@ -1,15 +1,19 @@
+"use client";
+
 import "@/app/labs/lab2/tailwind/utilities.css";
+import { useParams, useRouter } from "next/navigation";
 import { FaPlus, FaSearch } from "react-icons/fa";
 import AssignmentItem from "./AssignmentItem";
-import * as db from "../../../database";
+import { useAssignmentsStore } from "../../../store/assignmentsStore";
+import { useAccountContext } from "../../../account/AccountContext";
 
-export default async function Assignments({
-  params,
-}: {
-  params: Promise<{ cid: string }>;
-}) {
-  const { cid } = await params;
-  const assignments = db.assignments.filter(
+export default function Assignments() {
+  const { cid } = useParams<{ cid: string }>();
+  const router = useRouter();
+  const allAssignments = useAssignmentsStore((state) => state.assignments);
+  const { currentUser } = useAccountContext();
+  const isFaculty = currentUser?.role === "FACULTY";
+  const assignments = allAssignments.filter(
     (assignment) => assignment.course === cid,
   );
   return (
@@ -31,13 +35,16 @@ export default async function Assignments({
           >
             <FaPlus /> Group
           </button>
-          <button
-            id="wd-add-assignment"
-            type="button"
-            className="inline-flex items-center gap-1 rounded bg-red-600 px-3 py-1.5 text-sm font-medium text-white"
-          >
-            <FaPlus /> Assignment
-          </button>
+          {isFaculty && (
+            <button
+              id="wd-add-assignment"
+              type="button"
+              onClick={() => router.push(`/courses/${cid}/assignments/new`)}
+              className="inline-flex items-center gap-1 rounded bg-red-600 px-3 py-1.5 text-sm font-medium text-white"
+            >
+              <FaPlus /> Assignment
+            </button>
+          )}
         </div>
       </div>
       <h3
