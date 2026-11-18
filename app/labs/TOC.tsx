@@ -49,6 +49,24 @@ const LINKS = [
   },
 ] as const;
 
+const EXTERNAL_LINKS = [
+  {
+    href: "https://github.com/mrobie8/webdev-client/tree/a5",
+    id: "wd-github",
+    label: "Client GitHub Repo",
+  },
+  {
+    href: "https://github.com/mrobie8/webdev-server/tree/a5",
+    id: "wd-github-server",
+    label: "Server GitHub Repo",
+  },
+  {
+    href: "https://webdev-server-0jma.onrender.com",
+    id: "wd-render",
+    label: "Render Server",
+  },
+] as const;
+
 const activeStyle = {
   backgroundColor: "#2563eb",
   color: "white",
@@ -60,22 +78,39 @@ const activeStyle = {
 export default function TOC() {
   const pathname = usePathname() ?? "";
   return (
-    <ul>
-      {LINKS.map((link) => {
-        const active = link.match(pathname);
-        return (
+    <>
+      <p id="wd-full-name" className="mb-2 font-semibold">
+        Maya Robie
+      </p>
+      <ul>
+        {LINKS.map((link) => {
+          const active = link.match(pathname);
+          return (
+            <li key={link.id}>
+              <Link
+                href={link.href}
+                id={link.id}
+                style={active ? activeStyle : undefined}
+                aria-current={active ? "page" : undefined}
+              >
+                {link.label}
+              </Link>
+            </li>
+          );
+        })}
+        {EXTERNAL_LINKS.map((link) => (
           <li key={link.id}>
-            <Link
+            <a
               href={link.href}
               id={link.id}
-              style={active ? activeStyle : undefined}
-              aria-current={active ? "page" : undefined}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               {link.label}
-            </Link>
+            </a>
           </li>
-        );
-      })}
-    </ul>
+        ))}
+      </ul>
+    </>
   );
 }
