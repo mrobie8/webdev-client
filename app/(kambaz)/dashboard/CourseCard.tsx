@@ -7,14 +7,17 @@ import { useAccountContext } from "../account/AccountContext";
 export default function CourseCard({
   course,
   onEdit,
+  onDelete,
+  onEnroll,
+  onUnenroll,
 }: {
   course: Course;
   onEdit: () => void;
+  onDelete: () => void;
+  onEnroll: () => void;
+  onUnenroll: () => void;
 }) {
-  const deleteCourse = useCoursesStore((state) => state.deleteCourse);
   const { currentUser } = useAccountContext();
-  const enroll = useEnrollmentsStore((state) => state.enroll);
-  const unenroll = useEnrollmentsStore((state) => state.unenroll);
   const enrolled = useEnrollmentsStore((state) =>
     currentUser
       ? state.enrollments.some(
@@ -65,7 +68,7 @@ export default function CourseCard({
             className="ms-2 inline-flex items-center justify-center rounded bg-red-600 px-3 py-1.5 text-sm font-medium text-white"
             onClick={(event) => {
               event.preventDefault();
-              deleteCourse(course._id);
+              onDelete();
             }}
           >
             Delete
@@ -78,7 +81,7 @@ export default function CourseCard({
                 className="ms-2 inline-flex items-center justify-center rounded bg-red-600 px-3 py-1.5 text-sm font-medium text-white"
                 onClick={(event) => {
                   event.preventDefault();
-                  unenroll(currentUser._id, course._id);
+                  onUnenroll();
                 }}
               >
                 Unenroll
@@ -90,7 +93,7 @@ export default function CourseCard({
                 className="ms-2 inline-flex items-center justify-center rounded bg-green-600 px-3 py-1.5 text-sm font-medium text-white"
                 onClick={(event) => {
                   event.preventDefault();
-                  enroll(currentUser._id, course._id);
+                  onEnroll();
                 }}
               >
                 Enroll

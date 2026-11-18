@@ -3,7 +3,11 @@ import { FaPlus } from "react-icons/fa";
 import { useParams } from "next/navigation";
 import { useModulesStore } from "../../../store/modulesStore";
 
-export default function ModuleEditor() {
+export default function ModuleEditor({
+  onAddModule,
+}: {
+  onAddModule: (name: string) => void;
+}) {
   const { cid } = useParams();
   const [show, setShow] = useState(false);
   const [moduleName, setModuleName] = useState("");
@@ -57,7 +61,7 @@ export default function ModuleEditor() {
                 type="button"
                 onClick={() => {
                   if (!moduleName.trim()) return;
-                  addModule({ name: moduleName, course: String(cid) });
+                  onAddModule(moduleName);
                   setModuleName("");
                   setShow(false);
                 }}

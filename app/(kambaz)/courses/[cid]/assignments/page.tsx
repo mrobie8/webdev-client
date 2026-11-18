@@ -1,21 +1,37 @@
 "use client";
 
 import "@/app/labs/lab2/tailwind/utilities.css";
+import { useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { FaPlus, FaSearch } from "react-icons/fa";
 import AssignmentItem from "./AssignmentItem";
+import * as client from "./client";
 import { useAssignmentsStore } from "../../../store/assignmentsStore";
 import { useAccountContext } from "../../../account/AccountContext";
 
 export default function Assignments() {
   const { cid } = useParams<{ cid: string }>();
   const router = useRouter();
-  const allAssignments = useAssignmentsStore((state) => state.assignments);
+  const assignments = useAssignmentsStore((state) => state.assignments);
+  const setAssignments = useAssignmentsStore((state) => state.setAssignments);
+  const deleteAssignment = useAssignmentsStore(
+    (state) => state.deleteAssignment,
+  );
   const { currentUser } = useAccountContext();
   const isFaculty = currentUser?.role === "FACULTY";
-  const assignments = allAssignments.filter(
-    (assignment) => assignment.course === cid,
-  );
+
+  useEffect(() => {
+    const load = async () => {
+      setAssignments(await client.findAssignmentsForCourse(cid));
+    };
+    load();
+  }, [cid, setAssignments]);
+
+  const onDeleteAssignment = async (assignmentId: string) => {
+    await client.deleteAssignment(assignmentId);
+    deleteAssignment(assignmentId);
+  };
+
   return (
     <div id="wd-assignments">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
@@ -67,6 +83,7 @@ export default function Assignments() {
             aid={assignment._id}
             title={assignment.title}
             details={`Multiple Modules | Not available until ${assignment.available} | Due ${assignment.due} | ${assignment.points} pts`}
+            onDelete={() => onDeleteAssignment(assignment._id)}
           />
         ))}
       </ul>

@@ -1,33 +1,70 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CourseCard from "./CourseCard";
 import {
   emptyCourse,
   useCoursesStore,
   type Course,
 } from "../store/coursesStore";
-import * as db from "../database";
-import { useAccountContext } from "../account/AccountContext";
 import { useEnrollmentsStore } from "../store/enrollmentsStore";
+import * as client from "../courses/client";
+import * as enrollmentsClient from "../enrollments/client";
+import { useAccountContext } from "../account/AccountContext";
 
 export default function Dashboard() {
   const courses = useCoursesStore((state) => state.courses);
+  const setCourses = useCoursesStore((state) => state.setCourses);
   const addCourse = useCoursesStore((state) => state.addCourse);
   const updateCourse = useCoursesStore((state) => state.updateCourse);
+  const deleteCourse = useCoursesStore((state) => state.deleteCourse);
+  const setEnrollments = useEnrollmentsStore((state) => state.setEnrollments);
+  const enroll = useEnrollmentsStore((state) => state.enroll);
+  const unenroll = useEnrollmentsStore((state) => state.unenroll);
   const [course, setCourse] = useState<Course>(emptyCourse);
   const { currentUser } = useAccountContext();
-  const enrollments = useEnrollmentsStore((state) => state.enrollments);
   const [showAll, setShowAll] = useState(false);
-  const isEnrolled = (courseId: string) =>
-    !!currentUser &&
-    enrollments.some(
-      (e) => e.user === currentUser._id && e.course === courseId,
-    );
-  const visibleCourses =
-    !currentUser || showAll
-      ? courses
-      : courses.filter((c) => isEnrolled(c._id));
+
+  useEffect(() => {
+    const load = async () => {
+      if (!currentUser || showAll) {
+        setCourses(await client.fetchAllCourses());
+      } else {
+        setCourses(await client.findMyCourses());
+      }
+      setEnrollments(
+        currentUser ? await enrollmentsClient.findMyEnrollments() : [],
+      );
+    };
+    load();
+  }, [currentUser, showAll, setCourses, setEnrollments]);
+
+  const onAddCourse = async () => {
+    if (!currentUser) return;
+    const newCourse = await client.createCourse(course);
+    addCourse(newCourse);
+    setEnrollments(await enrollmentsClient.findMyEnrollments());
+  };
+  const onUpdateCourse = async () => {
+    const saved = await client.updateCourse(course);
+    updateCourse(saved);
+  };
+  const onDeleteCourse = async (courseId: string) => {
+    await client.deleteCourse(courseId);
+    deleteCourse(courseId);
+  };
+  const onEnroll = async (courseId: string) => {
+    const enrollment = await enrollmentsClient.enrollIntoCourse(courseId);
+    enroll(enrollment);
+  };
+  const onUnenroll = async (courseId: string) => {
+    if (!currentUser) return;
+    await enrollmentsClient.unenrollFromCourse(courseId);
+    unenroll(currentUser._id, courseId);
+    if (!showAll) {
+      setCourses(courses.filter((c) => c._id !== courseId));
+    }
+  };
 
   return (
     <div id="wd-dashboard">
@@ -53,7 +90,7 @@ export default function Dashboard() {
           type="button"
           className="rounded bg-blue-600 px-3 py-1.5 text-sm font-medium text-white"
           id="wd-add-new-course-click"
-          onClick={() => addCourse(course)}
+          onClick={onAddCourse}
         >
           Add
         </button>
@@ -61,7 +98,7 @@ export default function Dashboard() {
           type="button"
           className="rounded bg-yellow-400 px-3 py-1.5 text-sm font-medium"
           id="wd-update-course-click"
-          onClick={() => updateCourse(course)}
+          onClick={onUpdateCourse}
         >
           Update
         </button>
@@ -101,8 +138,15 @@ export default function Dashboard() {
         id="wd-dashboard-courses"
         className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
       >
-        {visibleCourses.map((c) => (
-          <CourseCard key={c._id} course={c} onEdit={() => setCourse(c)} />
+        {courses.map((c) => (
+          <CourseCard
+            key={c._id}
+            course={c}
+            onEdit={() => setCourse(c)}
+            onDelete={() => onDeleteCourse(c._id)}
+            onEnroll={() => onEnroll(c._id)}
+            onUnenroll={() => onUnenroll(c._id)}
+          />
         ))}
       </div>
     </div>

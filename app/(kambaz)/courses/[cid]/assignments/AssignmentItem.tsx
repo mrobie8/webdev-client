@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { FaFileAlt, FaTrash } from "react-icons/fa";
-import { useAssignmentsStore } from "../../../store/assignmentsStore";
 import { useAccountContext } from "../../../account/AccountContext";
 
 export default function AssignmentItem({
@@ -9,15 +8,14 @@ export default function AssignmentItem({
   aid,
   title,
   details,
+  onDelete,
 }: {
   cid: string;
   aid: string;
   title: string;
   details: string;
+  onDelete: (assignmentId: string) => void;
 }) {
-  const deleteAssignment = useAssignmentsStore(
-    (state) => state.deleteAssignment,
-  );
   const [confirming, setConfirming] = useState(false);
   const { currentUser } = useAccountContext();
   const isFaculty = currentUser?.role === "FACULTY";
@@ -65,7 +63,7 @@ export default function AssignmentItem({
                 type="button"
                 id="wd-delete-assignment-yes"
                 onClick={() => {
-                  deleteAssignment(aid);
+                  onDelete(aid);
                   setConfirming(false);
                 }}
                 className="rounded bg-red-600 px-3 py-1.5 text-sm font-medium text-white"

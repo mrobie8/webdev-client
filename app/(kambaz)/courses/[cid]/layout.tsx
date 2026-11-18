@@ -1,15 +1,13 @@
 "use client";
 
-import { ReactNode, useState } from "react";
-import { useParams } from "next/navigation";
+import { ReactNode, useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 import { FaAlignJustify } from "react-icons/fa6";
 import CourseNavigation from "./Navigation";
 import Breadcrumb from "./Breadcrumb";
-import { useCoursesStore } from "../../store/coursesStore";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import * as client from "../client";
+import { type Course } from "../../store/coursesStore";
 import { useAccountContext } from "../../account/AccountContext";
-import { useEnrollmentsStore } from "../../store/enrollmentsStore";
 
 export default function CoursesLayout({
   children,
@@ -18,24 +16,31 @@ export default function CoursesLayout({
 }>) {
   const { cid } = useParams();
   const courseId = typeof cid === "string" ? cid : "";
-  const courses = useCoursesStore((state) => state.courses);
-  const course = courses.find((c) => c._id === courseId);
+  const [course, setCourse] = useState<Course | undefined>(undefined);
+  const [status, setStatus] = useState<"loading" | "allowed" | "denied">(
+    "loading",
+  );
   const [showCourseNav, setShowCourseNav] = useState(true);
   const router = useRouter();
   const { currentUser } = useAccountContext();
-  const canView = useEnrollmentsStore(
-    (state) =>
-      !currentUser ||
-      state.enrollments.some(
-        (e) => e.user === currentUser._id && e.course === courseId,
-      ),
-  );
 
   useEffect(() => {
-    if (!canView) router.push("/dashboard");
-  }, [canView, router]);
+    const load = async () => {
+      const list: Course[] = currentUser
+        ? await client.findMyCourses()
+        : await client.fetchAllCourses();
+      const found = list.find((c) => c._id === courseId);
+      setCourse(found);
+      setStatus(found ? "allowed" : "denied");
+    };
+    load();
+  }, [currentUser, courseId]);
 
-  if (!canView) return null;
+  useEffect(() => {
+    if (status === "denied") router.push("/dashboard");
+  }, [status, router]);
+
+  if (status !== "allowed") return null;
 
   return (
     <div id="wd-courses">

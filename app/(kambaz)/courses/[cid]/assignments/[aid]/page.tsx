@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import * as client from "../client";
 import {
   useAssignmentsStore,
   type Assignment,
@@ -11,35 +12,55 @@ import {
 export default function AssignmentEditor() {
   const { cid, aid } = useParams<{ cid: string; aid: string }>();
   const router = useRouter();
-  const existing = useAssignmentsStore((state) =>
-    state.assignments.find((a) => a._id === aid),
-  );
+  const setAssignments = useAssignmentsStore((state) => state.setAssignments);
   const addAssignment = useAssignmentsStore((state) => state.addAssignment);
-  const updateAssignment = useAssignmentsStore((state) => state.updateAssignment);
-  const isNew = aid === "new";
-
-  const [assignment, setAssignment] = useState<Assignment>(
-    existing ?? {
-      _id: "",
-      title: "New Assignment",
-      course: cid,
-      description: "",
-      points: 100,
-      due: "",
-      available: "",
-      until: "",
-    },
+  const updateAssignment = useAssignmentsStore(
+    (state) => state.updateAssignment,
   );
+  const isNew = aid === "new";
+  const [assignment, setAssignment] = useState<Assignment | null>(null);
+  const [notFound, setNotFound] = useState(false);
 
-  const save = () => {
-    if (isNew) addAssignment({ ...assignment, course: cid });
-    else updateAssignment(assignment);
+  useEffect(() => {
+    const load = async () => {
+      if (isNew) {
+        setAssignment({
+          _id: "",
+          title: "New Assignment",
+          course: cid,
+          description: "",
+          points: 100,
+          due: "",
+          available: "",
+          until: "",
+        });
+        return;
+      }
+      const list: Assignment[] = await client.findAssignmentsForCourse(cid);
+      setAssignments(list);
+      const found = list.find((a) => a._id === aid);
+      if (found) setAssignment(found);
+      else setNotFound(true);
+    };
+    load();
+  }, [cid, aid, isNew, setAssignments]);
+
+  const save = async () => {
+    if (!assignment) return;
+    if (isNew) {
+      const created = await client.createAssignmentForCourse(cid, assignment);
+      addAssignment(created);
+    } else {
+      const saved = await client.updateAssignment(assignment);
+      updateAssignment(saved);
+    }
     router.push(`/courses/${cid}/assignments`);
   };
 
-  if (!isNew && !existing) {
+  if (notFound) {
     return <p className="p-4">Assignment not found.</p>;
   }
+  if (!assignment) return null;
 
   const field =
     "block w-full rounded border border-neutral-300 px-3 py-1.5 text-sm";
@@ -55,7 +76,9 @@ export default function AssignmentEditor() {
         <input
           id="wd-name"
           value={assignment.title}
-          onChange={(e) => setAssignment({ ...assignment, title: e.target.value })}
+          onChange={(e) =>
+            setAssignment({ ...assignment, title: e.target.value })
+          }
           className={field}
         />
         <p id="wd-assignment-id" className="mt-1 text-sm text-neutral-500">
@@ -179,7 +202,9 @@ export default function AssignmentEditor() {
               id="wd-due-date"
               type="date"
               value={assignment.due}
-              onChange={(e) => setAssignment({ ...assignment, due: e.target.value })}
+              onChange={(e) =>
+                setAssignment({ ...assignment, due: e.target.value })
+              }
               className={field}
             />
           </div>
